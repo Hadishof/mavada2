@@ -17,6 +17,7 @@ public class TestThreadCheckArray {
 			
 			SharedData sd = new SharedData(array, num);
 			
+			
 			thread1 = new Thread(new ThreadCheckArray(sd), "thread1");
 			thread2 = new Thread(new ThreadCheckArray(sd), "thread2");
 			thread1.start();
@@ -30,26 +31,31 @@ public class TestThreadCheckArray {
 			{
 				e.printStackTrace();
 			}
+			
 			if (!sd.getFlag())
 			{
 				System.out.println("Sorry");
 				return;
 			}
-			System.out.println("Solution for b : " + sd.getB() + ",n = " + sd.getArray().length);
+			
+			
+			System.out.println("Solution for b : " + sd.getB() + ", n = " + sd.getArray().length);
 			System.out.print("I:    ");
 			for(int index = 0; index < sd.getArray().length ; index++)
 				System.out.print(index + "    ");
 			System.out.println();
+			
 			System.out.print("A:    ");
-			for (int index : sd.getArray())
+			for (int val : sd.getArray())
 			{
-				System.out.print(index);
+				System.out.print(val);
 				int counter = 5;
+				int temp = val;
 				while (true)
 				{
-					index = index / 10;
+					temp = temp / 10;
 					counter--;
-					if (index == 0)
+					if (temp == 0)
 						break;
 				}
 				for (int i = 0; i < counter; i++)
@@ -58,14 +64,25 @@ public class TestThreadCheckArray {
 
 			System.out.println();
 			System.out.print("C:    ");
-			for (boolean index : sd.getWinArray())
+			boolean first = true;
+			String sumString = "";
+			for (int i = 0; i < sd.getWinArray().length; i++)
 			{
-				if (index)
+				if (sd.getWinArray()[i])
+				{
 					System.out.print("1    ");
+					
+					if (!first) sumString += "+";
+					sumString += sd.getArray()[i];
+					first = false;
+				}
 				else
 					System.out.print("0    ");	
 			}
+			
+			
+			System.out.println();
+			System.out.println(sumString + "=" + sd.getB());
 		}
 	}
-
 }
